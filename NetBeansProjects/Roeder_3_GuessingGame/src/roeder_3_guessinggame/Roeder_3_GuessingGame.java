@@ -46,8 +46,6 @@ static int counter;
         System.out.print(" Pick a number between 1 and 10.");
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
-        int tries = 5;
-        int count = 0;
         counter--;
         int Q = sc.nextInt();
         Random number = new Random();
