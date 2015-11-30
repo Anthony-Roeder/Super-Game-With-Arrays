@@ -68,13 +68,13 @@ public class Roeder_3_InteractiveFiction {
 //      scene2();                                                               
 //        System.out.println("0000050000");                                     
     }
-    public static void start() {
- while (!goodAnswer) {
+    public static void start() {     //#Method1
+ while (!goodAnswer) {//#while
         System.out.println(" Do you want to play a game? ");
        answer = S.nextLine().toLowerCase();
         if(answer.contains("yes")){
             goodAnswer = true;
-            System.out.println("Great let's get er goin");
+            System.out.println("Great let's get er goin"); //#new Protagonist
            } else if (answer.contains("no")) {
             goodAnswer = true;
        System.out.println("Bye");
@@ -86,12 +86,12 @@ public class Roeder_3_InteractiveFiction {
       objective();
     }
 
-        public static void objective() {
+        public static void objective() { // # Method2
             boolean scene1=false;
              boolean scene1_2=false;
             boolean scene1_3=false;
-            while (!goodAnswer2) {
-                System.out.println("Your first objective is to take over a species.");
+            while (!goodAnswer2) {//#while
+                System.out.println("Your objective is to take over a species."); //#Win
                 System.out.println("You have one of three choices The Dark Forest, the Caverns, and the Demon Realm. ");
                 System.out.println("Ok, Where would you like to go?");
                 answer2 =  Sc.nextLine().toLowerCase();
@@ -124,8 +124,8 @@ public class Roeder_3_InteractiveFiction {
             }
         }
 
-      public static void scene1() {
-          while (!goodAnswer3 & !beentoCavern) {
+      public static void scene1() {   //#Method3
+          while (!goodAnswer3 & !beentoCavern) {//#while
           System.out.println("The Dark Forest is mostly made up of Elves but they won't just follow you just cause you said so.");
           System.out.println("You must first defeat their King to show them you are more powerful than them. ");
           System.out.println("These elves are mostly Magic users and potion makers, their HP is low but they have high MP as well as high magic defense.");
@@ -156,8 +156,8 @@ public class Roeder_3_InteractiveFiction {
 
 
 
-      public static void scene1_2() {
-          while (!goodAnswer4) {
+      public static void scene1_2() {  //#Method4
+          while (!goodAnswer4) {//#while
               System.out.println("The Caverns mostly contain orcs and monsters but in order to have them follow your orders you need to defeat the Orc King.");
               System.out.println("The inhabitants of the Caverns are HIGH Physical attackers and have high HP but their MP is low as is their Magic defense. ");
               System.out.println("But before you can defeat the Orc King you need a weapon.");
@@ -184,8 +184,8 @@ public class Roeder_3_InteractiveFiction {
           }
 
       }
- public static void scene1_3(){
-          while (!goodAnswer5) {
+ public static void scene1_3(){ //#Method5
+          while (!goodAnswer5) {//#while
           System.out.println("Welcome to the Demon Realm most of the things in this realm aren't actually horrifying demons, they're actually human like demons with retractable wings.");
           System.out.println("These people possess both physical and magical abilities with normal HP, and MP but some of the demons rise above others and have sacred gears so hope your lucky.");
           System.out.println("However before they start following your orders you must first defeat the demon king");
@@ -211,7 +211,7 @@ public class Roeder_3_InteractiveFiction {
       }
           }
 }
-      public static void scene2() {
+      public static void scene2() { //#Method6
 
           boolean hitboolean = true;
             int hit = randy.nextInt(26);
@@ -226,7 +226,7 @@ public class Roeder_3_InteractiveFiction {
           System.out.println("Type hit to attack.");
           while (hitboolean){
           String choice;
-          Scanner attack = new Scanner(System.in);
+          Scanner attack = new Scanner(System.in);          // #EnemyObject
           choice = attack.nextLine().toLowerCase();
           hit = randy.nextInt(36);
           hit2 = randy.nextInt(40);
@@ -246,7 +246,7 @@ public class Roeder_3_InteractiveFiction {
                   scene3();
               if(HP <= 0){
                   System.out.println("You Lost");
-                  while (!goodAnswer6){
+                  while (!goodAnswer6){//#while
                   System.out.println("Would you like to try again?");
                   answer6 = Scanne.nextLine().toLowerCase();
                   if (answer6.contains("yes"));
@@ -255,7 +255,7 @@ public class Roeder_3_InteractiveFiction {
                       scene2();
                   if (answer6.contains("no")) {
                   goodAnswer6=true;
-                  System.out.println("GAME OVER");
+                  System.out.println("GAME OVER"); //#Lose #fortheloss
 
 	      }	
  
@@ -266,7 +266,7 @@ public class Roeder_3_InteractiveFiction {
           }
           }
       }
-      public static void scene2_1() {
+      public static void scene2_1() { //#Method7
       boolean hitboolean = true;
             int hit = randy.nextInt(26);
           int hit2 = randy.nextInt(40);
@@ -278,7 +278,7 @@ public class Roeder_3_InteractiveFiction {
           System.out.println("OK, you must defeat the Orc king to gain the leadership he has.");
           System.out.println("ORC KING: So you believe you can defeat me well come on and give me a go." );
           System.out.println("Type hit to attack.");
-          while (hitboolean){
+          while (hitboolean){//#while
           String choice;
           Scanner attack = new Scanner(System.in);
           choice = attack.nextLine().toLowerCase();
@@ -301,7 +301,7 @@ public class Roeder_3_InteractiveFiction {
                   scene3();
               if(HP <= 0){
                   System.out.println("You Lost");
-                  while (!goodAnswer7){
+                  while (!goodAnswer7){//#while
                   System.out.println("Would you like to try again?");
                   answer7 = Scanner.nextLine().toLowerCase();
                   if (answer7.contains("yes"));
@@ -310,7 +310,7 @@ public class Roeder_3_InteractiveFiction {
                       scene2();
                   if (answer7.contains("no")) {
                   goodAnswer7=true;
-                  System.out.println("GAME OVER");
+                  System.out.println("GAME OVER"); //#Lose #fortheloss
 
 	      }	
                   }
@@ -321,7 +321,7 @@ public class Roeder_3_InteractiveFiction {
 }
 
 
-         public static void scene2_2() {
+         public static void scene2_2() { //#Method8
               boolean hitboolean = true;
             int hit = randy.nextInt(26);
           int hit2 = randy.nextInt(40);
@@ -357,7 +357,7 @@ public class Roeder_3_InteractiveFiction {
                   scene3();
               if(HP <= 0){
                   System.out.println("You Lost");
-                  while (!goodAnswer8){
+                  while (!goodAnswer8){ //#while
                   System.out.println("Would you like to try again?");
                   answer8 = S1.nextLine().toLowerCase();
                   if (answer8.contains("yes"));
@@ -366,7 +366,7 @@ public class Roeder_3_InteractiveFiction {
                       scene2();
                   if (answer8.contains("no")) {
                   goodAnswer6=true;
-                  System.out.println("GAME OVER");
+                  System.out.println("GAME OVER"); //#Lose #fortheloss
 
 
           }
@@ -376,9 +376,10 @@ public class Roeder_3_InteractiveFiction {
 }
           }
          }
-             public static void scene3() {
+             
+         public static void scene3() { //#Method9
              System.out.println("ok CONGRATS on beating my game you have successfully conquered your Kingdom now lead with and iron fist.");
-             System.out.println("Please exit the game.");
+             System.out.println("Please exit the game.");// #Win #Forthewin
 
     }
 }
