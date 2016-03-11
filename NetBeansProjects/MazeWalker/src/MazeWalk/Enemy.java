@@ -3,339 +3,149 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slickexample;
-
-/**
- *
- * @author aroeder
- */
+package MazeWalk;
 import org.newdawn.slick.Animation;
-
 import org.newdawn.slick.SlickException;
-
 import org.newdawn.slick.SpriteSheet;
-
 import org.newdawn.slick.geom.Rectangle;
-
 import org.newdawn.slick.geom.Shape;
-
-
+import static MazeWalk.MazeWalker_Lvl1.player;
 public class Enemy {
-
-
-    private static int numberOfEnemies = 0;
-
+    private static int numberOfEnemies = 8;
     private int id;
-
     boolean[][] eblocked = blocked.getblocked();
-
     private Animation skeleton, skup, skdown, skleft, skright, skwait, skdead;
-
-    int SIZE = 64;
-
-    //static int crewsize;
-
+    int SIZE = 64;  
     float Bx;
-
     float By;
-
     float projectedright;
-
     float projectedleft;
-
     float projecteddown;
-
     float projectedup;
-
     boolean canmove;
-
     boolean cangoright;
-
     boolean cangoleft;
-
     boolean cangoup;
-
-    boolean cangodown;
-    
-    boolean isvisible = true;
-
-    int health = 100;
-
+    boolean cangodown; 
+   boolean isvisible = true;
+   int health = 100;
     Animation currentanime = new Animation();
-
     private float fdelta;
-
     int MapWidth = 50;
-
     int MapHeight = 100;
-
     double rightlimit = (MapWidth * SIZE) - (SIZE * 0.75);
-
     double downlimit = (MapHeight * SIZE) - (SIZE * 0.75);
-
     private boolean icangoup;
-
     private boolean icangodown;
-
     private boolean icangoleft;
-
     private boolean icangoright;
-
     private int startX, startY, width = 35, height = 42;
-
     float hitboxX = this.Bx + 8f;
-
     float hitboxY = this.By + 8f;
-
+    boolean isVisible = true;
     public Shape rect;
-
-
-    //System.out.println("Right limit: " + rightlimit);
-
     public enum Direction {
-
-
         UP, DOWN, LEFT, RIGHT, WAIT
-
     }
-
-
     Direction mydirection;
-
-
     Enemy(int a, int b) throws SlickException {
-
-
         Bx = a;
-
         By = b;
-
         hitboxX = this.getskhitboxX();
-
         hitboxY = this.getskhitboxY();
-
-        rect = new Rectangle(hitboxX, hitboxY, width, height);
-
-        
-
+        rect = new Rectangle(hitboxX, hitboxY, width, height);      
         int BHealth;
-
         boolean isBAlive = true;
-
         canmove = true;
-
         currentanime = skwait;
-
         id = ++numberOfEnemies;
-
-        this.mydirection = Direction.WAIT;
-        
-        
-
-
-        SpriteSheet skeletonSS = new SpriteSheet("res/skeletonwspearsprites.png",
-
-                64, 64, 0);
-
+        this.mydirection = Direction.WAIT;      
+        SpriteSheet skeletonSS = new SpriteSheet("res/skeletonwspearsprites.png",64, 64, 0);
         skup = new Animation();
-
         skup.setAutoUpdate(true);
-
         skup.addFrame(skeletonSS.getSprite(0, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(1, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(2, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(3, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(4, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(5, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(6, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(7, 8), 330);
-
         skup.addFrame(skeletonSS.getSprite(8, 8), 330);
-
-
         skdown = new Animation();
-
         skdown.setAutoUpdate(false);
-
         skdown.addFrame(skeletonSS.getSprite(0, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(1, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(2, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(3, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(4, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(5, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(6, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(7, 10), 330);
-
         skdown.addFrame(skeletonSS.getSprite(8, 10), 330);
-
-
         skleft = new Animation();
-
         skleft.setAutoUpdate(false);
-
         skleft.addFrame(skeletonSS.getSprite(0, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(1, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(2, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(3, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(4, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(5, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(6, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(7, 9), 330);
-
         skleft.addFrame(skeletonSS.getSprite(8, 9), 330);
-
-
         skright = new Animation();
-
         skright.setAutoUpdate(false);
-
         skright.addFrame(skeletonSS.getSprite(0, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(1, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(2, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(3, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(4, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(5, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(6, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(7, 11), 330);
-
         skright.addFrame(skeletonSS.getSprite(8, 11), 330);
-
-
         skwait = new Animation();
-
         skwait.setAutoUpdate(true); //turn autoupdate to false so he stops
-
         skwait.addFrame(skeletonSS.getSprite(0, 14), 733);
-
         skwait.addFrame(skeletonSS.getSprite(1, 14), 733);
-
         skwait.addFrame(skeletonSS.getSprite(2, 14), 733);
-
-        skwait.addFrame(skeletonSS.getSprite(3, 14), 733);
-
-        
-
+        skwait.addFrame(skeletonSS.getSprite(3, 14), 733);      
         skdead = new Animation();
-
         skdead.setAutoUpdate(false); //turn autoupdate to false so he stops
-
         skdead.addFrame(skeletonSS.getSprite(2, 20), 733);
-
         skdead.addFrame(skeletonSS.getSprite(3, 20), 733);
-
         skdead.addFrame(skeletonSS.getSprite(4, 20), 733);
-
-        skdead.addFrame(skeletonSS.getSprite(5, 20), 733);
-
-        
-
-        currentanime = skwait;
-
-
+        skdead.addFrame(skeletonSS.getSprite(5, 20), 733);       
+        currentanime = skwait;                 
     }
-
-
-   
-
     boolean isBlocked(float xcheck, float ycheck) {
-
-        // System.out.println("The skeleton " + this.getID() + " Checking on the tile at x " + xcheck + " and at y " + ycheck);
-
         int xBlock = (int) (xcheck / SIZE);
-
         int yBlock = (int) (ycheck / SIZE);
-
-
         if ((xBlock < MapWidth && yBlock < MapHeight) && (xBlock > 0
-
                 && yBlock > 0)) {
-
-
-            // System.out.println("Am I blocked ? " + blocked.blocked[xBlock][yBlock] );
-
             return blocked.blocked[xBlock][yBlock];
-
         } else {
-
             return true;
-
         }
-
     }
-
-
-    private boolean canigoup() {
-
-        fdelta = Player.getpdelta();
-
+   private boolean canigoup() {
         return (!isBlocked(this.Bx, this.By - fdelta)
-
                 || !isBlocked(this.Bx + SIZE - 1, this.By - fdelta));
-
     }
-
-
     private boolean canigodown() {
-
-        fdelta = Player.getpdelta();
-
+        fdelta = player.getpdelta();
         return ((!isBlocked(this.Bx, this.By + SIZE + 8)
-
                 || !isBlocked(this.Bx + SIZE - 1, this.By + SIZE + fdelta)));
-
-
     }
-
-
     private boolean canigoright() {
-
-        // fdelta = player.getpdelta();
-
-        //System.out.println("Can I go right? " + (!isBlocked(this.Bx + SIZE + fdelta, this.By) || !isBlocked(this.Bx + SIZE + fdelta, this.By - 1)));
-
+        fdelta = player.getpdelta();
         return (!isBlocked(this.Bx + SIZE + 6, this.By - 16)
-
-                || !isBlocked(this.Bx + SIZE + 16, this.By));
-
-        //return true;       
-
-
+                || !isBlocked(this.Bx + SIZE + 16, this.By));   
     }
-
-
     private boolean canigoleft() {
-
-        fdelta = Player.getpdelta();
-
-        //if (!(!isBlocked(this.Bx - SIZE, this.By) || !isBlocked(this.Bx - fdelta, this.By + SIZE - 16)) || !isBlocked(this.Bx, this.By + SIZE/2) || !isBlocked(this.Bx -16, this.By -64))
+       fdelta = player.getpdelta();
+       //if (!(!isBlocked(this.Bx - SIZE, this.By) || !isBlocked(this.Bx - fdelta, this.By + SIZE - 16)) || !isBlocked(this.Bx, this.By + SIZE/2) || !isBlocked(this.Bx -16, this.By -64))
 
         //{System.out.println("I can't go left. My id is " + this.getID());
 
@@ -366,7 +176,7 @@ public class Enemy {
         if (this.canigoup()) {
 
 
-            fdelta = Player.getpdelta();
+            fdelta = player.getpdelta();
 
             this.currentanime = skup;
 
@@ -387,7 +197,7 @@ public class Enemy {
 
         if (this.canigodown()) {
 
-            fdelta = Player.getpdelta();
+            fdelta = player.getpdelta();
 
             this.currentanime = skdown;
 
@@ -404,7 +214,7 @@ public class Enemy {
 
         if (this.canigoleft()) {
 
-            fdelta = Player.getpdelta();
+            fdelta = player.getpdelta();
 
             this.currentanime = skleft;
 
@@ -421,7 +231,7 @@ public class Enemy {
 
         if (this.canigoright()) {
 
-            fdelta = Player.getpdelta();
+            fdelta = player.getpdelta();
 
             this.currentanime = skright;
 
@@ -436,25 +246,25 @@ public class Enemy {
 
     void setdirection() {
 
-        if (Player.getplayersY() < this.By) {
+        if (player.getPlayersY() < this.By) {
 
             this.mydirection = Direction.UP;
 
         }
 
-        if ((Player.getplayersY() > this.By)) {
+        if ((player.getPlayersY() > this.By)) {
 
             this.mydirection = Direction.DOWN;
 
         }
 
-        if ((Player.getplayersX() > this.Bx)) {
+        if ((player.getPlayersX() > this.Bx)) {
 
             this.mydirection = Direction.RIGHT;
 
         }
 
-        if ((Player.getplayersX() < this.Bx) && canigoleft()) {
+        if ((player.getPlayersX() < this.Bx) && canigoleft()) {
 
             this.mydirection = Direction.LEFT;
 
@@ -475,11 +285,11 @@ public class Enemy {
 
         if (true){
 
-        if (this.Bx > Player.getplayersX()) {
+        if (this.Bx > player.getPlayersX()) {
 
             this.moveleft();
 
-        } else if (this.Bx < Player.getplayersX()) {
+        } else if (this.Bx < player.getPlayersX()) {
 
             this.moveright();
 
@@ -493,11 +303,11 @@ public class Enemy {
         }
 
 
-        if (this.By > Player.getplayersY()) {
+        if (this.By > player.getPlayersY()) {
 
             this.moveup();
 
-        } else if (this.By < Player.getplayersY()) {
+        } else if (this.By < player.getPlayersY()) {
 
             this.movedown();
 

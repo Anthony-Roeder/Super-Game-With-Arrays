@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package slickexample;
+package MazeWalk;
 
 
 import org.newdawn.slick.Color;
@@ -14,6 +14,11 @@ import org.newdawn.slick.Game;
 
 import org.newdawn.slick.GameContainer;
 
+
+
+import static MazeWalk.MazeWalker_Lvl2.player;
+
+import static MazeWalk.Player.chestscollected;
 
 import org.newdawn.slick.Graphics;
 
@@ -94,7 +99,8 @@ public class win extends BasicGameState {
 
         g.drawString("You Have Successfully Escaped", 380, 200);
         g.drawString("The Poisonous Maze With The Treasure", 380, 250);
-        g.drawString("Please Restart to play again", 420, 320);
+        g.drawString("You Collected"+chestscollected+"/7", 380, 300);
+        g.drawString("Please Restart to play again", 380, 350);
 
 
        
@@ -147,11 +153,11 @@ public class win extends BasicGameState {
 
             case Input.KEY_1:
 
-                Player.health  = 100000;
-                Player.speed = .04f;
-                MazeWalker.counter = 0;
-                Player.x = 96f;
-                Player.y = 228f;
+                player.health  = 1000000;
+                player.speed = .06f;
+                MazeWalker_Lvl1.counter = 0;
+                player.x = 96f;
+                player.y = 228f;
                 
                 
                 //item.isvisible = true;

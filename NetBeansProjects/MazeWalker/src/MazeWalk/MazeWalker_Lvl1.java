@@ -1,31 +1,19 @@
-package slickexample;
+package MazeWalk;
 
-import org.newdawn.slick.state.*;
 
-import java.io.IOException;
 
 import java.util.ArrayList;
 
-import java.util.Iterator;
 
-import java.util.logging.Level;
-
-import java.util.logging.Logger;
-
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 
 import org.newdawn.slick.AppGameContainer;
 
-import org.newdawn.slick.BasicGame;
-
-import org.newdawn.slick.Font;
 
 import org.newdawn.slick.GameContainer;
 
 import org.newdawn.slick.Graphics;
 
-import org.newdawn.slick.Image;
 
 import org.newdawn.slick.Input;
 
@@ -33,11 +21,6 @@ import org.newdawn.slick.SlickException;
 
 import org.newdawn.slick.SpriteSheet;
 
-import org.newdawn.slick.TrueTypeFont;
-
-import org.newdawn.slick.geom.Rectangle;
-
-import org.newdawn.slick.geom.Shape;
 
 import org.newdawn.slick.state.BasicGameState;
 
@@ -46,7 +29,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import org.newdawn.slick.tiled.TiledMap;
-import org.w3c.dom.css.Rect;
 
 class blocked {
 
@@ -63,11 +45,13 @@ class blocked {
 
 
 
-public class MazeWalker extends BasicGameState {
+public class MazeWalker_Lvl1 extends BasicGameState {
 
 	
 	public Item1 healthpotion, healthpotion1;
 	public Itemwin antidote;
+        public static Player player;
+        public Orb magic8ball, orb1;
         public Enemy one;
         public Enemy two;
         public Enemy three;
@@ -77,6 +61,7 @@ public class MazeWalker extends BasicGameState {
         public Enemy seven;
         public Enemy eight;
         public Treasure money;
+       
         
         public ArrayList <Enemy> Enemyz = new ArrayList();
         
@@ -84,7 +69,7 @@ public class MazeWalker extends BasicGameState {
 
 	public ArrayList<Item1> stuff = new ArrayList();
 
-	
+
 	
 	public ArrayList<Itemwin> stuffwin = new ArrayList();
         
@@ -102,7 +87,7 @@ public class MazeWalker extends BasicGameState {
 
 	// Player stuff
 
-	private Animation sprite, up, down, left, right, wait;
+	//private Animation sprite, up, down, left, right, wait;
 
 	/**
 	 * 
@@ -121,7 +106,7 @@ public class MazeWalker extends BasicGameState {
 
 	private static final int SCREEN_HEIGHT = 750;
 
-	public MazeWalker(int xSize, int ySize) {
+	public MazeWalker_Lvl1(int xSize, int ySize) {
 
 	}
 
@@ -143,9 +128,11 @@ public class MazeWalker extends BasicGameState {
 
 		// Ongoing checks are useful
 
-		System.out.println("Tile map is this wide: " + grassMap.getWidth());
+		
 
 		camera = new Camera(gc, grassMap);
+                
+                player = new Player();
 
 		// *********************************************************************************
 
@@ -154,119 +141,14 @@ public class MazeWalker extends BasicGameState {
 
 		// *********************************************************************************
 
-		SpriteSheet runningSS = new SpriteSheet(
-				"res/Hero.png",64, 64, 0);  
+		
 
 		// System.out.println("Horizontal count: "
 		// +runningSS.getHorizontalCount());
 
 		// System.out.println("Vertical count: " +runningSS.getVerticalCount());
 
-		up = new Animation();
-
-		up.setAutoUpdate(true);
-
-		up.addFrame(runningSS.getSprite(0, 8), 330);
-
-		up.addFrame(runningSS.getSprite(1, 8), 330);
-
-		up.addFrame(runningSS.getSprite(2, 8), 330);
-
-		up.addFrame(runningSS.getSprite(3, 8), 330);
-
-		up.addFrame(runningSS.getSprite(4, 8), 330);
-
-		up.addFrame(runningSS.getSprite(5, 8), 330);
-
-		up.addFrame(runningSS.getSprite(6, 8), 330);
-
-		up.addFrame(runningSS.getSprite(7, 8), 330);
-
-		up.addFrame(runningSS.getSprite(8, 8), 330);
-
-		down = new Animation();
-
-		down.setAutoUpdate(false);
-
-		down.addFrame(runningSS.getSprite(0, 10), 330);
-
-		down.addFrame(runningSS.getSprite(1, 10), 330);
-
-		down.addFrame(runningSS.getSprite(2, 10), 330);
-
-		down.addFrame(runningSS.getSprite(3, 10), 330);
-
-		down.addFrame(runningSS.getSprite(4, 10), 330);
-
-		down.addFrame(runningSS.getSprite(5, 10), 330);
-
-		down.addFrame(runningSS.getSprite(6, 10), 330);
-
-		down.addFrame(runningSS.getSprite(7, 10), 330);
-
-		down.addFrame(runningSS.getSprite(8, 10), 330);
-
-		left = new Animation();
-
-		left.setAutoUpdate(false);
-
-		left.addFrame(runningSS.getSprite(0, 9), 330);
-
-		left.addFrame(runningSS.getSprite(1, 9), 330);
-
-		left.addFrame(runningSS.getSprite(2, 9), 330);
-
-		left.addFrame(runningSS.getSprite(3, 9), 330);
-
-		left.addFrame(runningSS.getSprite(4, 9), 330);
-
-		left.addFrame(runningSS.getSprite(5, 9), 330);
-
-		left.addFrame(runningSS.getSprite(6, 9), 330);
-
-		left.addFrame(runningSS.getSprite(7, 9), 330);
-
-		left.addFrame(runningSS.getSprite(8, 9), 330);
-
-		right = new Animation();
-
-		right.setAutoUpdate(false);
-
-		right.addFrame(runningSS.getSprite(0, 11), 330);
-
-		right.addFrame(runningSS.getSprite(1, 11), 330);
-
-		right.addFrame(runningSS.getSprite(2, 11), 330);
-
-		right.addFrame(runningSS.getSprite(3, 11), 330);
-
-		right.addFrame(runningSS.getSprite(4, 11), 330);
-
-		right.addFrame(runningSS.getSprite(5, 11), 330);
-
-		right.addFrame(runningSS.getSprite(6, 11), 330);
-
-		right.addFrame(runningSS.getSprite(7, 11), 330);
-
-		right.addFrame(runningSS.getSprite(8, 11), 330);
-
-		wait = new Animation();
-
-		wait.setAutoUpdate(true);
-
-		wait.addFrame(runningSS.getSprite(0, 14), 733);
-
-		wait.addFrame(runningSS.getSprite(1, 14), 733);
-
-		wait.addFrame(runningSS.getSprite(2, 14), 733);
-
-		wait.addFrame(runningSS.getSprite(3, 14), 733);
-
-		// wait.addFrame(runningSS.getSprite(2, 14), 733);
-
-		// wait.addFrame(runningSS.getSprite(5, 14), 333);
-
-		sprite = wait;
+		
 
 		// *****************************************************************
 
@@ -288,8 +170,7 @@ public class MazeWalker extends BasicGameState {
 		// System.out.println("Number of tile layers: "
 		// +grassMap.getLayerCount());
 
-		System.out.println("The grassmap is " + grassMap.getWidth() + "by "
-				+ grassMap.getHeight());
+		
 
 		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
 
@@ -312,8 +193,7 @@ public class MazeWalker extends BasicGameState {
 
 				if ("true".equals(value)) {
 
-					System.out.println("The tile at x " + xAxis + " andy axis "
-							+ yAxis + " is blocked.");
+					
 
 					blocked.blocked[xAxis][yAxis] = true;
 
@@ -323,72 +203,52 @@ public class MazeWalker extends BasicGameState {
 
 		}
 
-		System.out.println("Array length" + blocked.blocked[0].length);
+		
 
 		// A remarkably similar process for finding hostiles
 
-		hostiles = new boolean[grassMap.getWidth()][grassMap.getHeight()];
-
-		for (int xAxis = 0; xAxis < grassMap.getWidth(); xAxis++) {
-			for (int yAxis = 0; yAxis < grassMap.getHeight(); yAxis++) {
-				int xBlock = (int) xAxis;
-				int yBlock = (int) yAxis;
-				if (!blocked.blocked[xBlock][yBlock]) {
-					if (yBlock % 7 == 0 && xBlock % 15 == 0 ) {
-						Item1 i = new Item1(xAxis * SIZE, yAxis * SIZE);
-						stuff.add(i);
-						//stuff1.add(h);
-						hostiles[xAxis][yAxis] = true;
-					}
-				}
-			}
-		}
-		
 		
 					
 				
+			
+		
+		
+		
+					
+		
 		
 
 	         one = new Enemy(50,50);
-                 
                  two = new Enemy(629,1513);
-               
                  three = new Enemy(839,2242);
-               
                  four = new Enemy (597,3824);
-               
                  five = new Enemy (1017,2975);
-               
                  six = new Enemy (1187,4634);
-               
                  seven = new Enemy (1883,1917);
-               
                  eight = new Enemy (4076,201);
-                 
-                 
-               
-                Enemyz.add(one);
-                Enemyz.add(two);
-                Enemyz.add(three);
-                Enemyz.add(four);
-                Enemyz.add(five);
-                Enemyz.add(six);
-                Enemyz.add(seven);
-                Enemyz.add(eight);
-                
-                money = new Treasure(603,4473);	
-                
-                moneyz.add(money);
+                 Enemyz.add(one);
+                 Enemyz.add(two);
+                 Enemyz.add(three);
+                 Enemyz.add(four);
+                 Enemyz.add(five);
+                 Enemyz.add(six);
+                 Enemyz.add(seven);
+                 Enemyz.add(eight);
+                 money = new Treasure(603,4473);	
+                 moneyz.add(money);
                 
                 healthpotion = new Item1(100, 100);
 		healthpotion1 = new Item1(450, 400);
 		stuff.add(healthpotion);
 		stuff.add(healthpotion1);
+                orb1 = new Orb((int) player.x + 5, (int) player.y - 5);
                
                
 		
 		antidote = new Itemwin(4454,184);
 		stuffwin.add(antidote);
+                
+               
                 
              
                 
@@ -398,11 +258,13 @@ public class MazeWalker extends BasicGameState {
 
 	throws SlickException {
 
-		camera.centerOn((int) Player.x, (int) Player.y);
+		camera.centerOn((int) player.x, (int) player.y);
 
 		camera.drawMap();
 
 		camera.translateGraphics();
+                
+               
 
 		// it helps to add status reports to see what's going on
 
@@ -410,11 +272,11 @@ public class MazeWalker extends BasicGameState {
 
 		// System.out.println("Current X: " +player.x + " \n Current Y: "+ y);
 
-		sprite.draw((int) Player.x, (int) Player.y);
+		player.sprite.draw((int) player.x, (int) player.y);
 		
 		//g.drawString("x: " + (int)Player.x + "y: " +(int)Player.y , Player.x, Player.y - 10);
 
-		g.drawString("Health: " + Player.health/1000, camera.cameraX + 10,
+		g.drawString("Health: " + player.health/1000, camera.cameraX + 10,
 				camera.cameraY + 10);
 
 		//g.draw(player.rect);
@@ -446,6 +308,11 @@ public class MazeWalker extends BasicGameState {
 
 			}
 		}
+               
+                if (orb1.isIsVisible()) {
+                    orb1.orbpic.draw(orb1.getX(), orb1.getY());
+                }
+                
                 for (Enemy e: Enemyz) {
 			if (e.isvisible) {
 				e.currentanime.draw(e.Bx, e.By);
@@ -454,15 +321,19 @@ public class MazeWalker extends BasicGameState {
                 for (Treasure t: moneyz) {
 			if (t.isvisible) {
 				t.currentImage.draw(t.x, t.y);
-                        }
-                }
+             
+            //    }                
+                   
+                
                                 
               
 
 			}
 		}
 
-	}
+                }
+                }
+        }
                 
         
 
@@ -474,15 +345,15 @@ public class MazeWalker extends BasicGameState {
 
 		Input input = gc.getInput();
 
-		float fdelta = delta * Player.speed;
+		float fdelta = delta * player.speed;
 
-		Player.setpdelta(fdelta);
+		player.setpdelta(fdelta);
 
 		double rightlimit = (grassMap.getWidth() * SIZE) - (SIZE * 0.75);
 
 		// System.out.println("Right limit: " + rightlimit);
 
-		float projectedright = Player.x + fdelta + SIZE;
+		float projectedright = player.x + fdelta + SIZE;
 
 		boolean cangoright = projectedright < rightlimit;
                 
@@ -495,88 +366,101 @@ public class MazeWalker extends BasicGameState {
 		// there are two types of fixes. A kludge and a hack. This is a kludge.
 
 		if (input.isKeyDown(Input.KEY_UP)) {
-
-			sprite = up;
+                        player.setDirection(0);   
+			player.sprite = player.up;
 
 			float fdsc = (float) (fdelta - (SIZE * .15));
 
-			if (!(isBlocked(Player.x, Player.y - fdelta) || isBlocked((float) (Player.x + SIZE + 1.5), Player.y - fdelta))) {
+			if (!(isBlocked(player.x, player.y - fdelta) || isBlocked((float) (player.x + SIZE + 1.5), player.y - fdelta))) {
 
-				sprite.update(delta);
+				player.sprite.update(delta);
 
 				// The lower the delta the slower the sprite will animate.
 
-				Player.y -= fdelta;
+				player.y -= fdelta;
 
 			}
 
 		} else if (input.isKeyDown(Input.KEY_DOWN)) {
+                        player.setDirection(2);
+			player.sprite = player.down;
 
-			sprite = down;
+			if (!isBlocked(player.x, player.y + SIZE + fdelta)
 
-			if (!isBlocked(Player.x, Player.y + SIZE + fdelta)
+			|| !isBlocked(player.x + SIZE - 1, player.y + SIZE + fdelta)) {
 
-			|| !isBlocked(Player.x + SIZE - 1, Player.y + SIZE + fdelta)) {
+				player.sprite.update(delta);
 
-				sprite.update(delta);
-
-				Player.y += fdelta;
+				player.y += fdelta;
 
 			}
 
 		} else if (input.isKeyDown(Input.KEY_LEFT)) {
+                        player.setDirection(3);
+			player.sprite = player.left;
 
-			sprite = left;
+			if (!(isBlocked(player.x - fdelta, player.y) || isBlocked(player.x
 
-			if (!(isBlocked(Player.x - fdelta, Player.y) || isBlocked(Player.x
+			- fdelta, player.y + SIZE - 1))) {
 
-			- fdelta, Player.y + SIZE - 1))) {
+				player.sprite.update(delta);
 
-				sprite.update(delta);
-
-				Player.x -= fdelta;
+				player.x -= fdelta;
 
 			}
 
 		} else if (input.isKeyDown(Input.KEY_RIGHT)) {
-
-			sprite = right;
+                        player.setDirection(1);
+			player.sprite = player.right;
 
 			// the boolean-kludge-implementation
 
 			if (cangoright
-					&& (!(isBlocked(Player.x + SIZE + fdelta,
+					&& (!(isBlocked(player.x + SIZE + fdelta,
 
-					Player.y) || isBlocked(Player.x + SIZE + fdelta, Player.y
+					player.y) || isBlocked(player.x + SIZE + fdelta, player.y
 							+ SIZE - 1)))) {
 
-				sprite.update(delta);
+				player.sprite.update(delta);
 
-				Player.x += fdelta;
+				player.x += fdelta;
 
 			} // else { System.out.println("Right limit reached: " +
 				// rightlimit);}
 
-		}
+		} else if (input.isKeyPressed(Input.KEY_SPACE)){
+                    //orb1.setLocation(player.x, player.y);
+                    orb1.setDirection(player.getDirection());
+                    orb1.settimeExists(1000);
+                    orb1.setX((int)player.x);
+                    orb1.setY((int) player.y);
+                    orb1.hitbox.setX(orb1.getX());
+                    orb1.hitbox.setY(orb1.getY());
+                    orb1.setIsVisible(!orb1.isIsVisible());
+                    //magic8ball.setIsVisible(true);
+                    
+                }
 
-		Player.rect.setLocation(Player.getplayershitboxX(),
-				Player.getplayershitboxY());
+		player.rect.setLocation(player.getPlayershitboxX(),
+				player.getPlayershitboxY());
 
 		for (Item1 i : stuff) {
 
-			if (Player.rect.intersects(i.hitbox)) {
+			if (player.rect.intersects(i.hitbox)) {
 				//System.out.println("yay");
 				if (i.isvisible) {
 
-					Player.health += 1000000;
+					player.health += 1000;
 					i.isvisible = false;
 				}
 
 			}
 		}
+               
+                
                 for (Treasure t : moneyz) {
 
-			if (Player.rect.intersects(t.hitbox)) {
+			if (player.rect.intersects(t.hitbox)) {
 				//System.out.println("yay");
 				if (t.isvisible) {
 
@@ -587,11 +471,11 @@ public class MazeWalker extends BasicGameState {
 		}
                 
 
-			if (Player.rect.intersects(e.rect)) {
+			if (player.rect.intersects(e.rect)) {
 				//System.out.println("yay");
 				if (e.isvisible) {
 
-					Player.health -= 100;
+					player.health -= 25000;
 					e.isvisible = false;
 				}
 
@@ -601,28 +485,58 @@ public class MazeWalker extends BasicGameState {
 		
 		for (Itemwin w : stuffwin) {
 
-			if (Player.rect.intersects(w.hitbox)) {
+			if (player.rect.intersects(w.hitbox)) {
 				//System.out.println("yay");
 				if (w.isvisible) {
 					w.isvisible = false;
 					makevisible();
-					sbg.enterState(3, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
+					sbg.enterState(4, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 					
 				}
 
 			}
 		}
-         
-                
-		 
-		Player.health -= counter/10;
-		if(Player.health <= 0){    
+                 for (Enemy y :Enemyz) {
+                    if(orb1.hitbox.intersects(y.rect)){
+                        y.isvisible = false;
+                    }
+                }
+                 
+                 if(orb1.isIsVisible()) {
+                     if (orb1.gettimeExists() > 0){
+                         if (player.getDirection() == 0){
+                             
+                             orb1.setX((int) player.x);
+                             orb1.setY(orb1.getY() - 5);
+                         } else if (player.getDirection() == 2){
+                         orb1.setX ((int) player.x);
+                         orb1.setY(orb1.getY() + 5);
+                         }else if (player.getDirection() == 3){
+                         orb1.setX(orb1.getX() - 5);
+                         orb1.setY(orb1.getY());
+                     }else if (player.getDirection() == 1){
+                     orb1.setX(orb1.getX() + 5);
+                     orb1.setY(orb1.getY());
+                 }
+                 
+                 orb1.hitbox.setX(orb1.getX());
+                 orb1.hitbox.setY(orb1.getY());
+                 orb1.countdown();
+                     } else {
+                 
+                 orb1.setIsVisible(false);
+                     }
+                 }
+        
+               
+		if(player.health <= 0){    
 			makevisible();
 			sbg.enterState(2, new FadeOutTransition(Color.black), new FadeInTransition(Color.black));
 		}
 
                 }
         }
+        
 
 	public int getID() {
             
@@ -630,8 +544,7 @@ public class MazeWalker extends BasicGameState {
 
 	}
 
-	public void makevisible(){
-		
+	public void makevisible(){ 
 		for (Item1 i : stuff) {
 			
 			i.isvisible = true;}

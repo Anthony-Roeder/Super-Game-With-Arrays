@@ -1,4 +1,4 @@
-package slickexample;
+package MazeWalk;
 
 
 import org.newdawn.slick.GameContainer;
